@@ -11,7 +11,12 @@ app.use(cors());
 app.use('/public', express.static(`${process.cwd()}/public`));
 
 app.get('/', function(req, res) {
-  res.sendFile(process.cwd() + '/views/index.html');
+  res.sendFile(process.cwd() + '/views/index.html', function(err) {
+    if (err) {
+      console.error('Error sending file:', err);
+      res.status(500).send('Error loading the page.');
+    }
+  });
 });
 
 // Your first API endpoint
