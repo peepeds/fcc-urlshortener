@@ -38,7 +38,10 @@ const addUrl = async (req, res) => {
             });
             await newShortUrl.save();
 
-            return res.status(200).json({ original_url, short_url });
+            res.json({
+                original_url,
+                short_url
+            });
         });
     } catch (err) {
         res.status(500).json({ error: 'Server error' });
