@@ -16,7 +16,8 @@ const addUrl = async (req, res) => {
         } 
     });
 
-    let short_url = await generateShortURL(6);
+    let size = await urlModel.countDocuments();
+    let short_url = Number(size + 1);
     const checkShort = await urlModel.findOne({ short_url: short_url });
 
     if (checkShort) {
