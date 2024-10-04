@@ -1,16 +1,27 @@
 // Mengimpor modul yang diperlukan
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path'); // Mengimpor path untuk menangani jalur file
-
 const app = express();
+const port = process.env.PORT || 3000;
+const router = require('./Router/urlRoute')
+
+
+
+require('dotenv').config();
+
+const connectDB = require('./models/connection');
+const bodyParser = require('body-parser');
+connectDB();
+
 
 // Konfigurasi dasar
-const port = process.env.PORT || 3000;
 
 // Menggunakan CORS
 app.use(cors());
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Menyajikan file statis dari folder public
 app.use('/public', express.static(path.join(__dirname, 'public')));
@@ -26,11 +37,13 @@ app.get('/', function(req, res) {
     }
   });
 });
-
-// Endpoint API pertama
-app.get('/api/hello', function(req, res) {
-  res.json({ greeting: 'hello API' });
+app.get('/ping', async (req, res) => {
+  res.send(req.body);
 });
+
+// Menambahkan route baru
+
+app.use('/api', router);
 
 // Menjalankan server
 app.listen(port, function() {
