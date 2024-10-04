@@ -8,16 +8,11 @@ const generateShortURL = async (length) => {
 
 const addUrl = async (req, res) => {
     try {
-        const original_url = req.body.url;
+        const original_url = await req.body.url;
 
         // Validasi URL menggunakan objek URL dan pastikan hanya menerima skema "https://"
         let url;
-        try {
-            url = new URL(original_url);
-            if (url.protocol !== 'https:') {
-                return res.status(400).json({ error: 'invalid url' });
-            }
-        } catch (error) {
+        if(!original_url.includes('https://')) {
             return res.status(400).json({ error: 'invalid url' });
         }
 
@@ -31,8 +26,7 @@ const addUrl = async (req, res) => {
             }
 
             // Hitung jumlah dokumen yang sudah ada dan gunakan sebagai short_url
-            let size = await urlModel.countDocuments();
-            let short_url = size + 1;
+            let short_url = generateShortURL(5);
 
             // Cek apakah short_url sudah ada
             const checkShort = await urlModel.findOne({ short_url });
