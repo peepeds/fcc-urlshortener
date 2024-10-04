@@ -6,10 +6,18 @@ const generateShortURL = async (length) => {
     return crypto.randomBytes(length).toString('base64').replace(/\W/g, '').slice(0, length);
 }
 
+
+
 const addUrl = async (req, res) => {
     try {
         const original_url = req.body.url;
         const host = await original_url.hostname;
+
+        const findOriginal = await urlModel.findOne({ original_url });
+        if(findOriginal){
+            findOriginal.access =  new Date()
+            return res.status(200).json({ original_url: findOriginal.original_url, short_url: findOriginal.short_url });
+        }
 
         dns.lookup(host, async (err) => {
             if (err) {

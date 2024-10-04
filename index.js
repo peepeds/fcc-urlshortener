@@ -10,6 +10,7 @@ require('dotenv').config();
 
 const connectDB = require('./models/connection');
 const bodyParser = require('body-parser');
+const { getUrl } = require('./controller/urlController');
 connectDB();
 
 // Konfigurasi dasar
@@ -41,6 +42,7 @@ app.get('/ping', async (req, res) => {
 });
 
 // Menambahkan route baru
+app.get('/:short_url', getUrl);
 app.use('/api', router);
 
 // Middleware untuk menangani 404 (route tidak ditemukan)
