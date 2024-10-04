@@ -1,46 +1,88 @@
+/* General styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Arial", sans-serif;
   font-size: 16px;
-  color: #222;
-  background-color: #fff;
+  color: #333;
+  background-color: #f4f4f9;
   text-align: center;
-  line-height: 1.4em;
-}
-
-main {
+  line-height: 1.6;
+  margin: 0;
   padding: 0;
+}
+
+h1 {
   margin-top: 40px;
-}
-
-h3 {
-  margin-top: 30px;
-}
-
-
-
-.user-stories li {
-  margin-bottom: 1em;
-}
-
-a {
+  font-size: 2.5rem;
   color: #2574a9;
 }
 
-form {
-  margin: 10px auto;
+main {
   padding: 20px;
-  max-width: 600px;
+  margin-top: 20px;
+}
+
+section {
+  margin-bottom: 40px;
+}
+
+form {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+fieldset {
+  border: none;
+}
+
+legend {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
 }
 
 label {
   margin-right: 10px;
+  font-size: 1rem;
 }
 
-input {
-  padding: 5px;
-}
-
-input[type='text'] {
-  width: 220px;
+input[type="text"] {
+  padding: 8px;
+  width: 280px;
   text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+input[type="submit"] {
+  padding: 10px 20px;
+  background-color: #2574a9;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+input[type="submit"]:hover {
+  background-color: #1a5c82;
+}
+
+#shorturl {
+  margin-top: 30px;
+}
+
+#url_result {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+a {
+  color: #2574a9;
 }

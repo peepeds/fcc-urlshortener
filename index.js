@@ -1,3 +1,4 @@
+require('dotenv').config({path:'./.env'});
 // Mengimpor modul yang diperlukan
 const express = require('express');
 const cors = require('cors');
@@ -6,7 +7,6 @@ const app = express();
 const port = process.env.PORT || 3000;
 const router = require('./Router/urlRoute')
 
-require('dotenv').config();
 
 const connectDB = require('./models/connection');
 const bodyParser = require('body-parser');
