@@ -10,24 +10,32 @@ const addUrl = async (req, res) => {
     try {
         const original_url = req.body.url;
 
-        // Validasi URL menggunakan URL object untuk memastikan formatnya benar
-        // let url;
-        // try {
-        //     url = new URL(original_url); // Ini akan melempar error jika format URL tidak valid
-        // } catch (error) {
-        //     return res.status(400).json({ error: 'invalid url' });
-        // }
+        // Validasi URL menggunakan objek URL dan pastikan hanya menerima skema "https://"
+        let url;
+        try {
+            url = new URL(original_url);
+            if (url.protocol !== 'https:') {
+                return res.status(400).json({ error: 'invalid url' });
+            }
+        } catch (error) {
+            return res.status(400).json({ error: 'invalid url' });
+        }
 
-        const host = original_url.substring(8);
-        dns.lookup(host, async (err) => { // Gunakan callback untuk DNS lookup
+        // Ambil hostname untuk pengecekan DNS
+        const host = url.hostname;
+
+        // Gunakan dns.lookup untuk memverifikasi host
+        dns.lookup(host, async (err) => {
             if (err) {
                 return res.status(400).json({ error: 'invalid url' });
             }
 
+            // Hitung jumlah dokumen yang sudah ada dan gunakan sebagai short_url
             let size = await urlModel.countDocuments();
-            let short_url = await generateShortURL(6);
-            const checkShort = await urlModel.findOne({ short_url });
+            let short_url = size + 1;
 
+            // Cek apakah short_url sudah ada
+            const checkShort = await urlModel.findOne({ short_url });
             if (checkShort) {
                 short_url = await generateShortURL(6);
             }
@@ -38,10 +46,7 @@ const addUrl = async (req, res) => {
             });
             await newShortUrl.save();
 
-            res.json({
-                original_url,
-                short_url
-            });
+            res.status(200).json({ original_url, short_url });
         });
     } catch (err) {
         res.status(500).json({ error: 'Server error' });
@@ -52,7 +57,7 @@ const getUrl = async (req, res) => {
     try {
         const short_url = req.params.short_url;
         const url = await urlModel.findOne({ short_url });
-        
+
         if (!url) {
             return res.status(404).json({ error: 'URL not found' });
         }
