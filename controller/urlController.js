@@ -27,7 +27,7 @@ const addUrl = async (req, res) => {
         // Gunakan dns.lookup untuk memverifikasi host
         dns.lookup(host, async (err) => {
             if (err) {
-                return res.status(400).json({ error: 'invalid url' });
+                return res.json({ error: 'invalid url' });
             }
 
             // Hitung jumlah dokumen yang sudah ada dan gunakan sebagai short_url
