@@ -12,8 +12,13 @@ const addUrl = async (req, res) => {
 
         // Validasi URL menggunakan objek URL dan pastikan hanya menerima skema "https://"
         let url;
-        if(!original_url.includes('https://')) {
-            return res.status(400).json({ error: 'invalid url' });
+        try {
+            url = new URL(original_url);
+            if (url.protocol !== 'https:') {
+                return res.json({ error: 'invalid url' });
+            }
+        } catch (error) {
+            return res.json({ error: 'invalid url' });
         }
 
         // Ambil hostname untuk pengecekan DNS
