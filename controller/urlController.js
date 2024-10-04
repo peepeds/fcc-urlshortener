@@ -9,22 +9,11 @@ const generateShortURL = async (length) => {
 const addUrl = async (req, res) => {
     try {
         const original_url = req.body.url;
-
-        let url;
-        try {
-            url = new URL(original_url);
-            if (url.protocol !== 'https:') {
-                return res.json({ error: 'invalid url' });
-            }
-        } catch (error) {
-            return res.json({ error: 'invalid url' });
-        }
-
-        const host = url.hostname;
+        const host = await original_url.hostname;
 
         dns.lookup(host, async (err) => {
             if (err) {
-                return res.json({ error: 'invalid url' });
+                return res.status(400).json({ error: 'invalid url' });
             }
             let short_url = await generateShortURL(5);
 
@@ -34,11 +23,10 @@ const addUrl = async (req, res) => {
                 checkShort = await urlModel.findOne({ short_url });
             }
 
-            const newShortUrl = new urlModel({
+            const newShortUrl = await new urlModel({
                 original_url,
                 short_url
-            });
-            await newShortUrl.save();
+            }).save();
 
             return res.status(200).json({ original_url, short_url });
         });
