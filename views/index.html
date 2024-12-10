@@ -30,7 +30,7 @@
       <section id="shorturl" style="display: none;">
         <fieldset>
           <legend>Short URL Result</legend>
-          <a id="url_result"></p>
+          <a id="url_result"></a>
         </fieldset>
       </section>
     </main>
@@ -39,19 +39,30 @@
       document
         .getElementById("submitForm")
         .addEventListener("submit", async function (event) {
-          event.preventDefault(); // Mencegah pengiriman formulir secara default
-          const result = document.getElementById("url_input").value;
+          event.preventDefault(); 
+          const urlInput = document.getElementById("url_input").value;
+
+          if(urlInput.includes(' ')) {
+            alert('Can not include space');
+            return;
+          }
+
+          if(!urlInput.includes('.')) {
+            alert('Must Contains dot');
+            return;
+          }
+
           const response = await fetch("/api/shorturl/", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ url: result }),
+            body: JSON.stringify({ url: urlInput }),
           });
 
           const data = await response.json();
-          let shorturl = await data.short_url;
-
+          let shorturl = data.short_url || data.error;
+          
           document.getElementById("url_result").innerText = shorturl;
           document.getElementById("shorturl").style.display = "block"; // Tampilkan hasil setelah submit
         });
