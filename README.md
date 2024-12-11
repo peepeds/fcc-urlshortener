@@ -1,10 +1,13 @@
-# URL Shortener Microservice
+# PROD
+- short.peepeds.fun
 
-This is the boilerplate code for the URL Shortener Microservice project. Instructions for building your project can be found at https://www.freecodecamp.org/learn/back-end-development-and-apis/back-end-development-and-apis-projects/url-shortener-microservice.
+# DEV
+- git clone -b dev https://github.com/peepeds/fcc-urlshortener
 
+# TEST
 
----
-prod / main branch not contains .env files . please create by yourself
+prerequisite => docker || https:// www.docker.com
 
-.env
-MONGO_URI={your mongo URI}
+1. curl -o docker-compose.yml https://raw.githubusercontent.com/peepeds/fcc-urlshortener/refs/heads/test/docker-compose.yml
+2. docker compose up
+3. docker compose down
