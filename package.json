@@ -4,8 +4,7 @@
   "description": "API project for freeCodeCamp & Cloud Computing projects",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "docker" : "docker-compose up"
+    "start": "nodemon index.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
