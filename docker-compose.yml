@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: peepeds/url-shortener:latest
+    image: peepeds/url-shortener:dev
     ports:
       - "3000:3000"
     environment:
@@ -17,7 +17,7 @@ services:
     image: mongo:latest
     container_name: mongo
     volumes:
-      - mongo-data:/db/data
+      - mongo-data:/db/datadev
     networks:
       - url-shortener-network
   
