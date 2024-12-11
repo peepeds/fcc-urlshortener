@@ -26,7 +26,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Route untuk mengakses index.html
 app.get('/', function (req, res) {
-  const filePath = path.join(__dirname, 'views', 'index.html'); // Menggunakan path.join untuk jalur yang aman
+  const filePath = path.join(__dirname, './public/views', 'index.html'); // Menggunakan path.join untuk jalur yang aman
   console.log('Trying to send file:', filePath); // Menampilkan jalur file di konsol
   res.sendFile(filePath, function (err) {
     if (err) {
@@ -38,7 +38,7 @@ app.get('/', function (req, res) {
 
 // Route untuk ping
 app.get('/ping', async (req, res) => {
-  res.send(req.body);
+  res.send('pong');
 });
 
 // Menambahkan route baru
